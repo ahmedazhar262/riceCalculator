@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rice Calculator</title>
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<style>
+  :root { box-sizing: border-box; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+  html, body { min-height: 100%; }
+  body { background: #7c4a1d; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+  input[type=number] { -moz-appearance: textfield; }
+  @keyframes nyShine { to { background-position: 200% center; } }
+  @keyframes nyFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+  @keyframes nyTwinkle { 0%, 100% { opacity: .2; transform: scale(.7); } 50% { opacity: 1; transform: scale(1.15); } }
+  .ny-text { background: linear-gradient(90deg, #fff3b0, #ffd54a, #ff9a56, #ffd54a, #fff3b0); background-size: 200% auto; -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent; animation: nyShine 3s linear infinite; filter: drop-shadow(0 2px 4px rgba(0,0,0,.6)); }
+  .ny-float { animation: nyFloat 3s ease-in-out infinite; }
+  .ny-spark { animation: nyTwinkle 1.6s ease-in-out infinite; }
+  @media (prefers-reduced-motion: reduce) { .ny-text, .ny-float, .ny-spark { animation: none; } }
+</style>
+</head>
+<body class="relative min-h-screen overflow-x-hidden">
+
+  <!-- Background image layer (inline SVG so it always loads).
+       To use your own photo, delete the <svg> and add:
+       <div class="fixed inset-0 bg-cover bg-center" style="background-image:url('your-image.jpg')"></div> -->
+  <svg class="fixed inset-0 w-full h-full" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#fcd89a"/><stop offset="0.55" stop-color="#f6a56b"/><stop offset="1" stop-color="#e0765a"/>
+      </linearGradient>
+      <linearGradient id="f1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9bbf4a"/><stop offset="1" stop-color="#5f8a2c"/></linearGradient>
+      <linearGradient id="f2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7fa63a"/><stop offset="1" stop-color="#436b1f"/></linearGradient>
+    </defs>
+    <rect width="800" height="600" fill="url(#sky)"/>
+    <circle cx="590" cy="190" r="70" fill="#fff3c9" opacity=".9"/>
+    <path d="M0 330 Q150 250 300 320 T600 300 T800 330 V600 H0Z" fill="#c9684f" opacity=".55"/>
+    <path d="M0 380 Q200 310 400 370 T800 360 V600 H0Z" fill="url(#f1)"/>
+    <path d="M0 440 Q250 390 450 435 T800 420 V600 H0Z" fill="url(#f2)"/>
+    <path d="M0 500 Q200 465 420 495 T800 485 V600 H0Z" fill="#2f5214"/>
+  </svg>
+  <div class="fixed inset-0 bg-black/20"></div>
+
+  <main class="relative z-10 min-h-screen flex items-center justify-center px-4 py-10">
+    <section class="group w-full max-w-md overflow-hidden rounded-3xl border border-white/30 bg-white/15 shadow-2xl backdrop-blur-xl transition duration-500 hover:-translate-y-1 hover:border-white/50 hover:shadow-[0_25px_60px_-12px_rgba(0,0,0,0.6)]">
+      <!-- Photo attached to the top half of the card -->
+      <div><div class="relative overflow-hidden">
+        <img src="Jogindar Hijda.jpg">
+        </div><div class="pointer-events-none relative z-10 -mt-[10.5rem] -mb-5 h-[11.75rem]"><div class="absolute inset-0 backdrop-blur-sm" style="-webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 35%,#000 89%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0%,#000 35%,#000 89%,transparent 100%)"></div><div class="absolute inset-0 backdrop-blur-md" style="-webkit-mask-image:linear-gradient(to bottom,transparent 15%,#000 50%,#000 90%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 15%,#000 50%,#000 90%,transparent 100%)"></div><div class="absolute inset-0 bg-white/10 backdrop-blur-xl" style="-webkit-mask-image:linear-gradient(to bottom,transparent 30%,#000 65%,#000 90%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 30%,#000 65%,#000 90%,transparent 100%)"></div><div class="ny-float absolute inset-x-0 bottom-[32%] text-center leading-none"><span class="ny-spark absolute left-[14%] top-0 text-lg">✨</span><span class="ny-spark absolute right-[14%] top-1 text-lg" style="animation-delay:.5s">🎉</span><span class="ny-spark absolute left-[24%] bottom-0 text-base" style="animation-delay:1s">✨</span><span class="ny-spark absolute right-[24%] bottom-0 text-base" style="animation-delay:.8s">✨</span><p class="ny-text text-lg font-bold tracking-wide sm:text-xl">शादी मुबारक</p><p class="ny-text mt-1 text-4xl font-extrabold tracking-widest sm:text-5xl"></p></div></div>
+      </div>
+
+      <div class="p-6 sm:p-8">
+        <div class="mb-5 text-center">
+          <h1 class="text-2xl font-bold text-white sm:text-3xl">Rice Calculator</h1>
+          <p class="mt-1 text-sm text-white/80">आदमियों की संख्या और खाना कितनी बार बनाया जाता है, यह दर्ज करें।</p>
+        </div>
+
+        <label class="block">
+          <span class="mb-1 block text-sm font-medium text-white">पुरुषों की कुल संख्या</span>
+          <input id="men" type="number" inputmode="numeric" step="1" min="0" placeholder="e.g. 150"
+            class="w-full rounded-xl border border-white/30 bg-white/20 px-4 py-3 text-lg text-white placeholder-white/60 outline-none backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:border-white/60 hover:bg-white/25 focus:border-white focus:ring-2 focus:ring-white/60">
+        </label>
+
+        <label class="mt-4 block">
+          <span class="mb-1 block text-sm font-medium text-white">खाना कितने समय बनेगा</span>
+          <input id="times" type="number" inputmode="numeric" step="1" min="0" value="1" placeholder="e.g. 2"
+            class="w-full rounded-xl border border-white/30 bg-white/20 px-4 py-3 text-lg text-white placeholder-white/60 outline-none backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:border-white/60 hover:bg-white/25 focus:border-white focus:ring-2 focus:ring-white/60">
+        </label>
+
+        <div class="mt-6 rounded-2xl border border-white/30 bg-white/20 p-5 text-center backdrop-blur transition duration-300 hover:scale-[1.02] hover:border-white/50 hover:bg-white/30 hover:shadow-xl">
+          <p class="text-sm text-white/80">चावल कुल गिलास</p>
+          <p id="total" class="mt-1 text-5xl font-extrabold text-white">0</p>
+          <p id="round" class="mt-1 text-xs text-white/70"></p>
+        </div>
+
+        <button id="reset" type="button"
+          class="mt-5 w-full rounded-xl bg-white/25 py-3 font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:bg-white/40 hover:shadow-lg active:scale-[0.98]">
+          फिर से जोड़ना
+        </button>
+      </div>
+    </section>
+  </main>
+
+<script>
+  const RATE = 0.6; // fixed glasses of rice per man
+  const men = document.getElementById('men');
+  const times = document.getElementById('times');
+  const total = document.getElementById('total');
+  const round = document.getElementById('round');
+  const fmt = n => Number.isInteger(n) ? String(n) : String(parseFloat(n.toFixed(2)));
+
+  function calc() {
+    const m = parseFloat(men.value) || 0;
+    const k = times.value === '' ? 1 : (parseFloat(times.value) || 0);
+    const t = RATE * m * k;
+    total.textContent = fmt(t);
+    round.textContent = (t > 0 && !Number.isInteger(t)) ? 'Rounded up: ' + Math.ceil(t) + ' glasses' : '';
+  }
+  men.addEventListener('input', calc);
+  times.addEventListener('input', calc);
+  document.getElementById('reset').addEventListener('click', () => {
+    men.value = ''; times.value = '1'; calc(); men.focus();
+  });
+  calc();
+</script>
+</body>
+</html>
